@@ -6,8 +6,14 @@ const openai = new OpenAI({
 });
 
 export async function analyzeTeam(roles, objectives, skills) {
-  const systemPrompt = `You are a product development team structure consultant. 
-Your job is to evaluate the team's current composition, objectives, and desired skills, and return practical recommendations.
+  const systemPrompt = `You are a strategic team structure consultant. 
+Your PRIMARY job is to analyze the team's GOALS and determine the BEST PATH to achieve them - whether through hiring, retraining, or reorganizing.
+
+ANALYSIS APPROACH:
+1. Start with the strategic objectives - what are they trying to achieve?
+2. Map required capabilities to achieve those objectives
+3. Assess current team against required capabilities
+4. Recommend the most efficient path to fill gaps (considering team sizing assessments)
 
 STRICT OUTPUT FORMAT:
 Return ONLY valid JSON with the following structure:
@@ -44,23 +50,27 @@ Return ONLY valid JSON with the following structure:
     }
   ],
   "strategicInsights": [
-    "Insight about team balance",
-    "Cost-effective approach to achieve objectives",
-    "Timeline considerations"
+    "How each objective will be achieved with recommended changes",
+    "Cost-benefit analysis of retraining vs hiring",
+    "Timeline for achieving all objectives",
+    "Risk factors and mitigation strategies"
   ]
 }
 
 CRITICAL ANALYSIS RULES:
-1. Pay attention to team sizing assessments:
-   - If "understaffed/Need More": Recommend hiring more of that role
-   - If "overstaffed/Too Many": Suggest retraining those people for other needs
-   - If "right-sized": No action needed for that role's headcount
-2. Only suggest upskilling where skills naturally align (e.g., Data Viz → Frontend is realistic, Data Engineer → UX Designer is not)
-3. If objectives require fundamentally different expertise, recommend hiring
-4. Tie EVERY recommendation back to a specific stated objective
-5. Be specific about technologies and responsibilities - no generic descriptions
-6. If a role is overstaffed, prioritize retraining those people before suggesting new hires
-7. Always consider team sizing in your strategic insights`;
+1. START WITH THE OBJECTIVES - What are they trying to build/achieve?
+2. For EACH objective, identify:
+   - What capabilities are needed
+   - Who on the current team could do this
+   - What gaps exist
+3. Create a HOLISTIC plan that considers:
+   - Overstaffed roles as retraining opportunities
+   - Understaffed roles that need more people
+   - Completely missing skills that require new hires
+4. Your recommendations should form a COMPLETE ROADMAP to achieve ALL objectives
+5. Be specific: "To build [objective X], you need [capability Y], which can be filled by [solution Z]"
+6. Consider cost-effectiveness: retraining overstaffed roles is cheaper than hiring
+7. EVERY recommendation must directly enable achieving a stated objective`;
 
   const userPrompt = `
 Current Team Composition:
@@ -77,7 +87,13 @@ ${objectives.join('\n')}
 Desired Skills/Capabilities:
 ${skills}
 
-Analyze this team and provide recommendations. Consider the team sizing assessments - if a role is understaffed, recommend hiring more; if overstaffed, suggest retraining those excess people for other needs.`;
+PROVIDE A HOLISTIC ANALYSIS:
+1. For each objective, explain what's needed to achieve it
+2. Map current team capabilities to objectives
+3. Identify gaps and provide specific solutions
+4. Create a complete roadmap showing how to achieve ALL objectives with minimal cost (prioritize retraining overstaffed roles over new hires where possible)
+
+Your analysis should answer: "How do we achieve our objectives with the team we have, and what specific changes are needed?"`;
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o',
