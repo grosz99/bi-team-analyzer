@@ -9,8 +9,10 @@ export async function analyzeTeam(roles, objectives, skills) {
   const prompt = `
     You are a product development team structure consultant. Analyze this team and provide recommendations based on their SPECIFIC objectives and needs.
     
-    Current Team:
-    ${roles.map(role => `${role.title}: ${role.description} | Currently: ${role.currentWork}`).join('\n')}
+    Current Team Composition:
+    ${roles.map(role => `${role.title} (${role.headcount || 1} people): ${role.description} | Currently: ${role.currentWork}`).join('\n')}
+    
+    Total Team Size: ${roles.reduce((sum, role) => sum + (role.headcount || 1), 0)} people
     
     Strategic Objectives:
     ${objectives.join('\n')}
@@ -18,15 +20,11 @@ export async function analyzeTeam(roles, objectives, skills) {
     Desired Skills/Capabilities:
     ${skills}
     
-    IMPORTANT: Base your recommendations on the ACTUAL objectives and skills mentioned above. If they mention:
-    - Software development, web apps, or APIs → Recommend developers (Frontend, Backend, Full-stack, Mobile)
-    - Infrastructure or deployment → Recommend DevOps, SRE, Cloud Architect roles
-    - Quality or testing → Recommend QA Engineers, Test Automation Engineers
-    - User experience → Recommend UX Designers, UI Engineers
-    - Machine learning → Recommend ML Engineers, Data Scientists
-    - Security → Recommend Security Engineers, Security Analysts
-    - Growth → Recommend Growth Engineers, Marketing Engineers
-    - Data/BI/Analytics → Recommend Data roles (Data Scientists, Analytics Engineers, etc.)
+    IMPORTANT ANALYSIS GUIDELINES:
+    1. Notice team imbalances (e.g., many analysts but few engineers, or vice versa)
+    2. PRIORITIZE UPSKILLING existing team members over hiring new roles when feasible
+    3. If you have many people in one role (like visualization analysts), suggest how to upskill them
+    4. Base recommendations on ACTUAL objectives mentioned above
     
     Provide analysis in JSON format:
     {
@@ -41,25 +39,29 @@ export async function analyzeTeam(roles, objectives, skills) {
         {
           "title": "Role that directly addresses their stated objectives",
           "description": "Role responsibilities",
-          "reasoning": "How this role helps achieve the SPECIFIC objectives mentioned",
+          "reasoning": "Why hire this role vs upskilling existing team",
           "priority": "High/Medium/Low",
-          "timeframe": "Immediate/3-6 months/6-12 months"
+          "timeframe": "Immediate/3-6 months/6-12 months",
+          "quantity": "Number of people needed in this role"
         }
       ],
       "roleEnhancements": [
         {
           "existingRole": "Current Role Title",
+          "numberOfPeople": "How many people in this role could be upskilled",
           "additionalSkills": "Skills to add that align with stated objectives",
-          "trainingNeeded": "Specific training recommendations"
+          "trainingNeeded": "Specific training recommendations",
+          "potentialNewTitle": "What they could become after upskilling"
         }
       ],
       "strategicInsights": [
-        "Insight specifically about achieving their stated objectives",
-        "Recommendation tied to their mentioned skills and goals"
+        "Comment on team balance and composition",
+        "Specific upskilling opportunities given your team makeup",
+        "Cost-effective ways to achieve objectives with current team"
       ]
     }
     
-    Analyze the objectives carefully and recommend roles that DIRECTLY support what they're trying to build. Don't default to data roles unless their objectives specifically mention data/analytics/BI needs.
+    Focus heavily on upskilling opportunities, especially if you notice an imbalance in the team (like many analysts that could be trained for other needs). Only recommend new hires when upskilling isn't feasible.
   `;
 
   const response = await openai.chat.completions.create({

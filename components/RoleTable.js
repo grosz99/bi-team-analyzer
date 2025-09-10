@@ -33,7 +33,7 @@ export default function RoleTable({ roles, setRoles }) {
       title: 'New Role',
       description: 'Enter role description',
       currentWork: 'Enter current work',
-      skillsNeeded: 'Enter required skills'
+      headcount: 1
     };
     setRoles([...roles, newRole]);
     handleEdit(newRole);
@@ -70,7 +70,7 @@ export default function RoleTable({ roles, setRoles }) {
                 Current Work
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-bcg-dark-gray uppercase tracking-wider">
-                Skills Needed
+                How Many Needed
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-bcg-dark-gray uppercase tracking-wider">
                 Actions
@@ -124,15 +124,17 @@ export default function RoleTable({ roles, setRoles }) {
                 </td>
                 <td className="px-6 py-4">
                   {editingId === role.id ? (
-                    <textarea
-                      value={editingData.skillsNeeded}
-                      onChange={(e) => handleFieldChange('skillsNeeded', e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
-                      rows="2"
+                    <input
+                      type="number"
+                      value={editingData.headcount || 1}
+                      onChange={(e) => handleFieldChange('headcount', parseInt(e.target.value) || 1)}
+                      className="w-20 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
+                      min="1"
+                      max="99"
                     />
                   ) : (
-                    <div className="text-sm text-gray-600 max-w-xs">
-                      {role.skillsNeeded || '-'}
+                    <div className="text-sm font-semibold text-bcg-dark-gray">
+                      {role.headcount || 1}
                     </div>
                   )}
                 </td>
