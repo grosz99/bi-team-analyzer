@@ -25,6 +25,11 @@ export async function analyzeTeam(roles, objectives, skills) {
     2. PRIORITIZE UPSKILLING existing team members over hiring new roles when feasible
     3. If you have many people in one role (like visualization analysts), suggest how to upskill them
     4. Base recommendations on ACTUAL objectives mentioned above
+    5. For each recommended role, be VERY SPECIFIC about:
+       - What exact features/systems they would build (tie to objectives)
+       - What technologies they would use
+       - How they complement the existing team
+       - Why this can't be done by upskilling current team members
     
     Provide analysis in JSON format:
     {
@@ -37,9 +42,9 @@ export async function analyzeTeam(roles, objectives, skills) {
       ],
       "recommendedRoles": [
         {
-          "title": "Role that directly addresses their stated objectives",
-          "description": "Role responsibilities",
-          "reasoning": "Why hire this role vs upskilling existing team",
+          "title": "Specific role title (e.g., Full-Stack Developer, DevOps Engineer, etc.)",
+          "description": "Detailed responsibilities: List 3-4 specific tasks this role would handle based on the objectives",
+          "reasoning": "Explain EXACTLY how this role addresses the specific objectives mentioned. Reference the objective by name and explain what gap this fills that can't be filled by upskilling",
           "priority": "High/Medium/Low",
           "timeframe": "Immediate/3-6 months/6-12 months",
           "quantity": "Number of people needed in this role"
@@ -61,7 +66,13 @@ export async function analyzeTeam(roles, objectives, skills) {
       ]
     }
     
-    Focus heavily on upskilling opportunities, especially if you notice an imbalance in the team (like many analysts that could be trained for other needs). Only recommend new hires when upskilling isn't feasible.
+    Focus heavily on upskilling opportunities, especially if you notice an imbalance in the team. Only recommend new hires when upskilling isn't feasible.
+    
+    CRITICAL: Your role recommendations must be ACTUAL roles with SPECIFIC responsibilities tied to their objectives. For example:
+    - If objective is "Build scalable web application" → Recommend "Full-Stack Developer" with specific tasks like "Build React frontend components, Develop Node.js APIs, Implement authentication system"
+    - If objective is "Implement CI/CD pipeline" → Recommend "DevOps Engineer" with tasks like "Set up Jenkins/GitHub Actions, Configure Docker containers, Manage AWS infrastructure"
+    
+    Never give generic descriptions like "Responsible for building and maintaining the reporting portal" - be specific about WHAT they build and HOW.
   `;
 
   const response = await openai.chat.completions.create({
