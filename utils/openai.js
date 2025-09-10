@@ -51,19 +51,25 @@ Return ONLY valid JSON with the following structure:
 }
 
 CRITICAL ANALYSIS RULES:
-1. Notice team imbalances (too many of one role, missing key roles)
+1. Pay attention to team sizing assessments:
+   - If "understaffed/Need More": Recommend hiring more of that role
+   - If "overstaffed/Too Many": Suggest retraining those people for other needs
+   - If "right-sized": No action needed for that role's headcount
 2. Only suggest upskilling where skills naturally align (e.g., Data Viz → Frontend is realistic, Data Engineer → UX Designer is not)
 3. If objectives require fundamentally different expertise, recommend hiring
 4. Tie EVERY recommendation back to a specific stated objective
 5. Be specific about technologies and responsibilities - no generic descriptions
-6. If no new roles needed, return empty recommendedRoles array and explain in insights
-7. Always consider at least one realistic upskilling opportunity if possible`;
+6. If a role is overstaffed, prioritize retraining those people before suggesting new hires
+7. Always consider team sizing in your strategic insights`;
 
   const userPrompt = `
 Current Team Composition:
-${roles.map(role => `${role.title} (${role.headcount || 1} people): ${role.description} | Currently: ${role.currentWork}`).join('\n')}
+${roles.map(role => `${role.title} (Team Size: ${role.teamSize || 'right-sized'}): ${role.description} | Currently: ${role.currentWork}`).join('\n')}
 
-Total Team Size: ${roles.reduce((sum, role) => sum + (role.headcount || 1), 0)} people
+Team Sizing Assessment:
+- "understaffed/Need More" = This role needs more people to handle workload
+- "right-sized" = Team size is appropriate for current needs
+- "overstaffed/Too Many" = Have more people than needed in this role
 
 Strategic Objectives:
 ${objectives.join('\n')}
@@ -71,7 +77,7 @@ ${objectives.join('\n')}
 Desired Skills/Capabilities:
 ${skills}
 
-Analyze this team and provide recommendations. Be practical - suggest hiring for fundamentally different skills, upskilling only where there's natural overlap.`;
+Analyze this team and provide recommendations. Consider the team sizing assessments - if a role is understaffed, recommend hiring more; if overstaffed, suggest retraining those excess people for other needs.`;
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o',
