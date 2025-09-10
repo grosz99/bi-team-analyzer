@@ -11,11 +11,11 @@ import { Brain, Loader, BarChart3 } from 'lucide-react';
 export default function Home() {
   const [roles, setRoles] = useState(defaultRoles);
   const [objectives, setObjectives] = useState([
-    'Implement real-time analytics dashboard',
-    'Build ML-powered forecasting models',
-    'Create self-service BI platform'
+    'Build scalable web application with modern tech stack',
+    'Implement CI/CD pipeline for faster deployments',
+    'Improve user experience and interface design'
   ]);
-  const [skills, setSkills] = useState('We need machine learning capabilities for predictive analytics, real-time data streaming expertise for live dashboards, and cloud infrastructure knowledge for scalable solutions');
+  const [skills, setSkills] = useState('We need full-stack development capabilities, DevOps expertise for infrastructure, and strong frontend skills for user experience improvements');
   const [analysis, setAnalysis] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState(null);
@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>BI Team Role Analyzer | BCG</title>
+        <title>Product Team Role Analyzer | BCG</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -68,8 +68,8 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <BarChart3 size={32} />
                 <div>
-                  <h1 className="text-3xl font-bold">BI Team Role Analyzer</h1>
-                  <p className="text-bcg-gray text-sm mt-1">Optimize your Business Intelligence team structure</p>
+                  <h1 className="text-3xl font-bold">Product Team Role Analyzer</h1>
+                  <p className="text-bcg-gray text-sm mt-1">Optimize your product development team structure</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -127,7 +127,7 @@ export default function Home() {
         <footer className="bg-bcg-dark-gray text-white mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center">
-              <p className="text-sm">© 2024 BCG - Business Intelligence Team Analyzer</p>
+              <p className="text-sm">© 2024 BCG - Product Team Role Analyzer</p>
               <p className="text-sm text-bcg-gray">Powered by AI Analytics</p>
             </div>
           </div>
