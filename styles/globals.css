@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bcg-navy: #003366;
+  --bcg-blue: #0066CC;
+  --bcg-light-blue: #4A90A4;
+  --bcg-gray: #F5F5F5;
+  --bcg-dark-gray: #333333;
+  --bcg-accent: #00A0B0;
+  --bcg-green: #28A745;
+  --bcg-orange: #FD7E14;
+  --bcg-red: #DC3545;
+  --bcg-white: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bcg-gray);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-bcg-blue text-white px-4 py-2 rounded-md hover:bg-bcg-light-blue transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-bcg-gray text-bcg-dark-gray px-4 py-2 rounded-md hover:bg-gray-200 transition-colors;
+  }
+  
+  .input-field {
+    @apply px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-lg p-6;
+  }
+  
+  .section-header {
+    @apply text-2xl font-bold text-bcg-navy mb-4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: light;
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bcg-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bcg-light-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bcg-blue);
+}
