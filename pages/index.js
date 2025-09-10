@@ -15,7 +15,6 @@ export default function Home() {
     'Implement CI/CD pipeline for faster deployments',
     'Improve user experience and interface design'
   ]);
-  const [skills, setSkills] = useState('We need full-stack development capabilities, DevOps expertise for infrastructure, and strong frontend skills for user experience improvements');
   const [analysis, setAnalysis] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState(null);
@@ -25,7 +24,7 @@ export default function Home() {
     setError(null);
     
     try {
-      const result = await analyzeTeam(roles, objectives, skills);
+      const result = await analyzeTeam(roles, objectives);
       setAnalysis(result);
     } catch (err) {
       console.error('Analysis error:', err);
@@ -49,7 +48,6 @@ export default function Home() {
   const exportData = {
     roles,
     objectives,
-    skills,
     analysis
   };
 
@@ -86,8 +84,6 @@ export default function Home() {
             <ObjectivesPanel 
               objectives={objectives}
               setObjectives={setObjectives}
-              skills={skills}
-              setSkills={setSkills}
             />
             
             <div className="flex justify-center">

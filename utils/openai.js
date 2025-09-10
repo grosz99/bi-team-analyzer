@@ -5,7 +5,7 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-export async function analyzeTeam(roles, objectives, skills) {
+export async function analyzeTeam(roles, objectives) {
   const systemPrompt = `You are a strategic team structure consultant. 
 Your PRIMARY job is to analyze the team's GOALS and determine the BEST PATH to achieve them - whether through hiring, retraining, or reorganizing.
 
@@ -58,22 +58,18 @@ Return ONLY valid JSON with the following structure:
 
 CRITICAL ANALYSIS RULES:
 1. START WITH THE OBJECTIVES - What are they trying to build/achieve?
-2. For EACH objective, identify:
-   - What capabilities are needed
-   - Who on the current team could do this
-   - What gaps exist
-3. For currentGaps: Focus on CAPABILITY GAPS (what the team can't do), not just restating the desired skills
-   - Bad: "Front-end development skills" (just restates the input)
-   - Good: "No one can build React components or implement responsive designs"
-4. For roleEnhancements: Analyze EVERY EXISTING ROLE and identify what they need to learn
-   - Even if a role seems fine, identify skills that would make them more effective
+2. For EACH objective, determine what capabilities are needed (YOU figure this out, don't wait for user input)
+3. Compare needed capabilities against current team to find gaps
+4. For currentGaps: Be specific about what the team CANNOT do
+   - Example: "To build scalable web app (Objective 1), need React/Node.js skills - currently no one has frontend development experience"
+5. For roleEnhancements: Analyze EVERY EXISTING ROLE
+   - What skills does each role need to help achieve the objectives?
    - Be specific about training paths and timelines
-5. Create a HOLISTIC plan considering team sizing:
-   - Overstaffed roles as retraining opportunities
-   - Understaffed roles that need more people
-   - Missing skills that require new hires
-6. Your recommendations should form a COMPLETE ROADMAP to achieve ALL objectives
-7. Be specific: "To build [objective X], you need [capability Y], which can be filled by [solution Z]"`;
+6. Create a COMPLETE ROADMAP considering team sizing:
+   - Overstaffed roles = retraining opportunities
+   - Understaffed roles = need more people
+   - Missing capabilities = new hires OR upskilling
+7. Your analysis should show the PATH from current state to achieving all objectives`;
 
   const userPrompt = `
 Current Team Composition:
@@ -86,9 +82,6 @@ Team Sizing Assessment:
 
 Strategic Objectives:
 ${objectives.join('\n')}
-
-Desired Skills/Capabilities:
-${skills}
 
 PROVIDE A HOLISTIC ANALYSIS:
 1. For each objective, explain what's needed to achieve it
