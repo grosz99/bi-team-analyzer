@@ -6,90 +6,88 @@ const openai = new OpenAI({
 });
 
 export async function analyzeTeam(roles, objectives, skills) {
-  const prompt = `
-    You are a product development team structure consultant. Analyze this team and provide recommendations based on their SPECIFIC objectives and needs.
-    
-    Current Team Composition:
-    ${roles.map(role => `${role.title} (${role.headcount || 1} people): ${role.description} | Currently: ${role.currentWork}`).join('\n')}
-    
-    Total Team Size: ${roles.reduce((sum, role) => sum + (role.headcount || 1), 0)} people
-    
-    Strategic Objectives:
-    ${objectives.join('\n')}
-    
-    Desired Skills/Capabilities:
-    ${skills}
-    
-    IMPORTANT ANALYSIS GUIDELINES:
-    1. Notice team imbalances (e.g., many analysts but few engineers, or vice versa)
-    2. Only suggest upskilling where skills naturally align (e.g., Data Viz Analyst → Frontend Developer makes sense, but Data Engineer → UX Designer doesn't)
-    3. Be realistic about skill gaps - if objectives require completely different expertise, recommend hiring
-    4. Base recommendations on ACTUAL objectives mentioned above
-    5. For each recommended role, be VERY SPECIFIC about:
-       - What exact features/systems they would build (tie to objectives)
-       - What technologies they would use
-       - How they complement the existing team
-       - Whether this is a hire or realistic upskilling opportunity
-    
-    Provide analysis in JSON format:
+  const systemPrompt = `You are a product development team structure consultant. 
+Your job is to evaluate the team's current composition, objectives, and desired skills, and return practical recommendations.
+
+STRICT OUTPUT FORMAT:
+Return ONLY valid JSON with the following structure:
+{
+  "currentGaps": [
     {
-      "currentGaps": [
-        {
-          "area": "Skill/capability area directly tied to stated objectives",
-          "impact": "High/Medium/Low",
-          "description": "What's missing and why it matters FOR THEIR SPECIFIC GOALS"
-        }
-      ],
-      "recommendedRoles": [
-        {
-          "title": "Specific role title (e.g., Full-Stack Developer, DevOps Engineer, etc.)",
-          "description": "Detailed responsibilities: List 3-4 specific tasks this role would handle based on the objectives",
-          "reasoning": "Explain EXACTLY how this role addresses the specific objectives mentioned. Reference the objective by name and explain what gap this fills that can't be filled by upskilling",
-          "priority": "High/Medium/Low",
-          "timeframe": "Immediate/3-6 months/6-12 months",
-          "quantity": "Number of people needed in this role"
-        }
-      ],
-      "roleEnhancements": [
-        {
-          "existingRole": "Current Role Title",
-          "numberOfPeople": "How many people in this role could realistically be upskilled",
-          "additionalSkills": "Skills to add that naturally align with their current expertise",
-          "trainingNeeded": "Specific training recommendations (be realistic about time/effort)",
-          "potentialNewTitle": "What they could become after upskilling",
-          "feasibility": "High/Medium/Low - how realistic is this transition"
-        }
-      ],
-      "strategicInsights": [
-        "Comment on team balance and composition",
-        "Specific upskilling opportunities given your team makeup",
-        "Cost-effective ways to achieve objectives with current team"
-      ]
+      "area": "Specific skill/capability gap",
+      "impact": "High/Medium/Low",
+      "description": "Why this gap matters for their objectives",
+      "tiedToObjective": "Which specific objective this affects"
     }
-    
-    Be practical about recommendations - suggest hiring for roles that require fundamentally different skills. Only suggest upskilling where there's natural skill overlap (e.g., Visualization Analyst could learn frontend development since both involve UI/UX, but wouldn't easily become a DevOps engineer).
-    
-    CRITICAL: Your role recommendations must be ACTUAL roles with SPECIFIC responsibilities tied to their objectives. For example:
-    - If objective is "Build scalable web application" → Recommend "Full-Stack Developer" with specific tasks like "Build React frontend components, Develop Node.js APIs, Implement authentication system"
-    - If objective is "Implement CI/CD pipeline" → Recommend "DevOps Engineer" with tasks like "Set up Jenkins/GitHub Actions, Configure Docker containers, Manage AWS infrastructure"
-    
-    Never give generic descriptions like "Responsible for building and maintaining the reporting portal" - be specific about WHAT they build and HOW.
-  `;
+  ],
+  "recommendedRoles": [
+    {
+      "title": "Specific role title (e.g., Full-Stack Developer, DevOps Engineer)",
+      "description": "3-4 specific responsibilities this role would handle",
+      "technologies": ["Tech1", "Tech2", "Tech3"],
+      "reasoning": "Why hire this role vs upskilling existing team",
+      "priority": "High/Medium/Low",
+      "timeframe": "Immediate/3-6 months/6-12 months",
+      "quantity": 1,
+      "tiedToObjective": "Which specific objective this addresses"
+    }
+  ],
+  "roleEnhancements": [
+    {
+      "existingRole": "Current Role Title",
+      "numberOfPeople": 2,
+      "additionalSkills": ["Skill1", "Skill2"],
+      "trainingNeeded": "Specific training path",
+      "potentialNewTitle": "What they could become",
+      "feasibility": "High/Medium/Low",
+      "justification": "Why this upskilling makes sense given their current skills"
+    }
+  ],
+  "strategicInsights": [
+    "Insight about team balance",
+    "Cost-effective approach to achieve objectives",
+    "Timeline considerations"
+  ]
+}
+
+CRITICAL ANALYSIS RULES:
+1. Notice team imbalances (too many of one role, missing key roles)
+2. Only suggest upskilling where skills naturally align (e.g., Data Viz → Frontend is realistic, Data Engineer → UX Designer is not)
+3. If objectives require fundamentally different expertise, recommend hiring
+4. Tie EVERY recommendation back to a specific stated objective
+5. Be specific about technologies and responsibilities - no generic descriptions
+6. If no new roles needed, return empty recommendedRoles array and explain in insights
+7. Always consider at least one realistic upskilling opportunity if possible`;
+
+  const userPrompt = `
+Current Team Composition:
+${roles.map(role => `${role.title} (${role.headcount || 1} people): ${role.description} | Currently: ${role.currentWork}`).join('\n')}
+
+Total Team Size: ${roles.reduce((sum, role) => sum + (role.headcount || 1), 0)} people
+
+Strategic Objectives:
+${objectives.join('\n')}
+
+Desired Skills/Capabilities:
+${skills}
+
+Analyze this team and provide recommendations. Be practical - suggest hiring for fundamentally different skills, upskilling only where there's natural overlap.`;
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4',
+    model: 'gpt-4o',
     messages: [
       {
         role: 'system',
-        content: 'You are a product team structure expert. Return only valid JSON without any markdown formatting or code blocks.'
+        content: systemPrompt
       },
       {
         role: 'user',
-        content: prompt
+        content: userPrompt
       }
     ],
     temperature: 0.3,
-    max_tokens: 2000
+    max_tokens: 3000,
+    response_format: { type: 'json_object' }
   });
 
   const content = response.choices[0].message.content;
