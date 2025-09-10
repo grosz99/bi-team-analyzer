@@ -22,14 +22,14 @@ export async function analyzeTeam(roles, objectives, skills) {
     
     IMPORTANT ANALYSIS GUIDELINES:
     1. Notice team imbalances (e.g., many analysts but few engineers, or vice versa)
-    2. PRIORITIZE UPSKILLING existing team members over hiring new roles when feasible
-    3. If you have many people in one role (like visualization analysts), suggest how to upskill them
+    2. Only suggest upskilling where skills naturally align (e.g., Data Viz Analyst → Frontend Developer makes sense, but Data Engineer → UX Designer doesn't)
+    3. Be realistic about skill gaps - if objectives require completely different expertise, recommend hiring
     4. Base recommendations on ACTUAL objectives mentioned above
     5. For each recommended role, be VERY SPECIFIC about:
        - What exact features/systems they would build (tie to objectives)
        - What technologies they would use
        - How they complement the existing team
-       - Why this can't be done by upskilling current team members
+       - Whether this is a hire or realistic upskilling opportunity
     
     Provide analysis in JSON format:
     {
@@ -53,10 +53,11 @@ export async function analyzeTeam(roles, objectives, skills) {
       "roleEnhancements": [
         {
           "existingRole": "Current Role Title",
-          "numberOfPeople": "How many people in this role could be upskilled",
-          "additionalSkills": "Skills to add that align with stated objectives",
-          "trainingNeeded": "Specific training recommendations",
-          "potentialNewTitle": "What they could become after upskilling"
+          "numberOfPeople": "How many people in this role could realistically be upskilled",
+          "additionalSkills": "Skills to add that naturally align with their current expertise",
+          "trainingNeeded": "Specific training recommendations (be realistic about time/effort)",
+          "potentialNewTitle": "What they could become after upskilling",
+          "feasibility": "High/Medium/Low - how realistic is this transition"
         }
       ],
       "strategicInsights": [
@@ -66,7 +67,7 @@ export async function analyzeTeam(roles, objectives, skills) {
       ]
     }
     
-    Focus heavily on upskilling opportunities, especially if you notice an imbalance in the team. Only recommend new hires when upskilling isn't feasible.
+    Be practical about recommendations - suggest hiring for roles that require fundamentally different skills. Only suggest upskilling where there's natural skill overlap (e.g., Visualization Analyst could learn frontend development since both involve UI/UX, but wouldn't easily become a DevOps engineer).
     
     CRITICAL: Your role recommendations must be ACTUAL roles with SPECIFIC responsibilities tied to their objectives. For example:
     - If objective is "Build scalable web application" → Recommend "Full-Stack Developer" with specific tasks like "Build React frontend components, Develop Node.js APIs, Implement authentication system"
