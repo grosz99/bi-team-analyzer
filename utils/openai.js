@@ -40,13 +40,12 @@ Return ONLY valid JSON with the following structure:
   ],
   "roleEnhancements": [
     {
-      "existingRole": "Current Role Title",
-      "numberOfPeople": 2,
-      "additionalSkills": ["Skill1", "Skill2"],
-      "trainingNeeded": "Specific training path",
-      "potentialNewTitle": "What they could become",
-      "feasibility": "High/Medium/Low",
-      "justification": "Why this upskilling makes sense given their current skills"
+      "existingRole": "Current Role Title from the team",
+      "skillsToAdd": ["Specific skill 1", "Specific skill 2"],
+      "trainingNeeded": "Concrete training path (courses, certifications, practice projects)",
+      "whyNeeded": "How these skills help achieve the stated objectives",
+      "timeToTrain": "2-3 months",
+      "feasibility": "High/Medium/Low"
     }
   ],
   "strategicInsights": [
@@ -63,14 +62,18 @@ CRITICAL ANALYSIS RULES:
    - What capabilities are needed
    - Who on the current team could do this
    - What gaps exist
-3. Create a HOLISTIC plan that considers:
+3. For currentGaps: Focus on CAPABILITY GAPS (what the team can't do), not just restating the desired skills
+   - Bad: "Front-end development skills" (just restates the input)
+   - Good: "No one can build React components or implement responsive designs"
+4. For roleEnhancements: Analyze EVERY EXISTING ROLE and identify what they need to learn
+   - Even if a role seems fine, identify skills that would make them more effective
+   - Be specific about training paths and timelines
+5. Create a HOLISTIC plan considering team sizing:
    - Overstaffed roles as retraining opportunities
    - Understaffed roles that need more people
-   - Completely missing skills that require new hires
-4. Your recommendations should form a COMPLETE ROADMAP to achieve ALL objectives
-5. Be specific: "To build [objective X], you need [capability Y], which can be filled by [solution Z]"
-6. Consider cost-effectiveness: retraining overstaffed roles is cheaper than hiring
-7. EVERY recommendation must directly enable achieving a stated objective`;
+   - Missing skills that require new hires
+6. Your recommendations should form a COMPLETE ROADMAP to achieve ALL objectives
+7. Be specific: "To build [objective X], you need [capability Y], which can be filled by [solution Z]"`;
 
   const userPrompt = `
 Current Team Composition:
