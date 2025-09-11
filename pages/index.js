@@ -60,14 +60,14 @@ export default function Home() {
       </Head>
 
       <div className="min-h-screen bg-gray-50">
-        <header className="bg-bcg-navy text-white shadow-lg">
+        <header className="bg-bcg-dark-green text-white shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <BarChart3 size={32} />
                 <div>
                   <h1 className="text-3xl font-bold">Product Team Role Analyzer</h1>
-                  <p className="text-bcg-gray text-sm mt-1">Optimize your product development team structure</p>
+                  <p className="text-bcg-light-gray text-sm mt-1">Optimize your product development team structure</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -90,7 +90,7 @@ export default function Home() {
               <button
                 onClick={handleAnalyze}
                 disabled={isAnalyzing}
-                className="bg-bcg-accent text-white px-8 py-4 rounded-lg hover:bg-bcg-blue transition-colors flex items-center gap-3 text-lg font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-bcg-green text-white px-8 py-4 rounded-lg hover:bg-bcg-dark-green transition-colors flex items-center gap-3 text-lg font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? (
                   <>
@@ -124,7 +124,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center">
               <p className="text-sm">© 2024 BCG - Product Team Role Analyzer</p>
-              <p className="text-sm text-bcg-gray">Powered by AI Analytics</p>
+              <p className="text-sm text-bcg-light-gray">Powered by AI Analytics</p>
             </div>
           </div>
         </footer>

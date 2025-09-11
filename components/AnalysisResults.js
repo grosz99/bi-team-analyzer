@@ -18,8 +18,8 @@ export default function AnalysisResults({ analysis, onAddRole }) {
 
   const getImpactColor = (impact) => {
     switch(impact) {
-      case 'High': return 'text-bcg-red border-bcg-red bg-red-50';
-      case 'Medium': return 'text-bcg-orange border-bcg-orange bg-orange-50';
+      case 'High': return 'text-red-600 border-red-600 bg-red-50';
+      case 'Medium': return 'text-orange-600 border-orange-600 bg-orange-50';
       case 'Low': return 'text-bcg-green border-bcg-green bg-green-50';
       default: return 'text-gray-600 border-gray-300 bg-gray-50';
     }
@@ -27,8 +27,8 @@ export default function AnalysisResults({ analysis, onAddRole }) {
 
   const getPriorityColor = (priority) => {
     switch(priority) {
-      case 'High': return 'bg-bcg-red';
-      case 'Medium': return 'bg-bcg-orange';
+      case 'High': return 'bg-red-600';
+      case 'Medium': return 'bg-orange-600';
       case 'Low': return 'bg-bcg-green';
       default: return 'bg-gray-400';
     }
@@ -41,7 +41,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
       {analysis.currentGaps && analysis.currentGaps.length > 0 && (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div 
-            className="bg-bcg-navy text-white px-6 py-4 flex justify-between items-center cursor-pointer"
+            className="bg-bcg-dark-green text-white px-6 py-4 flex justify-between items-center cursor-pointer"
             onClick={() => toggleSection('gaps')}
           >
             <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
       {analysis.recommendedRoles && analysis.recommendedRoles.length > 0 && (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div 
-            className="bg-bcg-navy text-white px-6 py-4 flex justify-between items-center cursor-pointer"
+            className="bg-bcg-dark-green text-white px-6 py-4 flex justify-between items-center cursor-pointer"
             onClick={() => toggleSection('roles')}
           >
             <div className="flex items-center gap-2">
@@ -91,12 +91,12 @@ export default function AnalysisResults({ analysis, onAddRole }) {
                   <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="text-lg font-semibold text-bcg-navy">{role.title}</h4>
+                        <h4 className="text-lg font-semibold text-bcg-dark-green">{role.title}</h4>
                         <p className="text-sm text-gray-600 mt-1">{role.description}</p>
                       </div>
                       <button
                         onClick={() => onAddRole(role)}
-                        className="bg-bcg-blue text-white px-4 py-2 rounded-md hover:bg-bcg-light-blue transition-colors text-sm"
+                        className="bg-bcg-green text-white px-4 py-2 rounded-md hover:bg-bcg-dark-green transition-colors text-sm"
                       >
                         Add to Team
                       </button>
@@ -128,7 +128,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
       {analysis.roleEnhancements && analysis.roleEnhancements.length > 0 && (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div 
-            className="bg-bcg-navy text-white px-6 py-4 flex justify-between items-center cursor-pointer"
+            className="bg-bcg-dark-green text-white px-6 py-4 flex justify-between items-center cursor-pointer"
             onClick={() => toggleSection('enhancements')}
           >
             <div className="flex items-center gap-2">
@@ -142,7 +142,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
             <div className="p-6">
               <div className="space-y-4">
                 {analysis.roleEnhancements.map((enhancement, index) => (
-                  <div key={index} className="border-l-4 border-bcg-accent pl-4">
+                  <div key={index} className="border-l-4 border-bcg-teal pl-4">
                     <h4 className="font-semibold text-bcg-dark-gray">{enhancement.existingRole}</h4>
                     <div className="mt-2 space-y-2">
                       <div>
@@ -165,7 +165,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
       {analysis.strategicInsights && analysis.strategicInsights.length > 0 && (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div 
-            className="bg-bcg-navy text-white px-6 py-4 flex justify-between items-center cursor-pointer"
+            className="bg-bcg-dark-green text-white px-6 py-4 flex justify-between items-center cursor-pointer"
             onClick={() => toggleSection('insights')}
           >
             <div className="flex items-center gap-2">
@@ -180,7 +180,7 @@ export default function AnalysisResults({ analysis, onAddRole }) {
               <ul className="space-y-3">
                 {analysis.strategicInsights.map((insight, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-bcg-blue rounded-full mt-1.5 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-bcg-green rounded-full mt-1.5 flex-shrink-0"></div>
                     <p className="text-gray-700">{insight}</p>
                   </li>
                 ))}

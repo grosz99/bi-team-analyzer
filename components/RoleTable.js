@@ -45,11 +45,11 @@ export default function RoleTable({ roles, setRoles }) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="bg-bcg-navy text-white px-6 py-4 flex justify-between items-center">
+      <div className="bg-bcg-dark-green text-white px-6 py-4 flex justify-between items-center">
         <h2 className="text-xl font-bold">Current Team Roles</h2>
         <button
           onClick={handleAdd}
-          className="bg-bcg-blue hover:bg-bcg-light-blue transition-colors px-4 py-2 rounded-md flex items-center gap-2"
+          className="bg-bcg-green hover:bg-bcg-dark-green transition-colors px-4 py-2 rounded-md flex items-center gap-2"
         >
           <Plus size={18} />
           Add Role
@@ -86,7 +86,7 @@ export default function RoleTable({ roles, setRoles }) {
                       type="text"
                       value={editingData.title}
                       onChange={(e) => handleFieldChange('title', e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
+                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-green"
                     />
                   ) : (
                     <div className="text-sm font-medium text-bcg-dark-gray">
@@ -99,7 +99,7 @@ export default function RoleTable({ roles, setRoles }) {
                     <textarea
                       value={editingData.description}
                       onChange={(e) => handleFieldChange('description', e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
+                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-green"
                       rows="2"
                     />
                   ) : (
@@ -113,7 +113,7 @@ export default function RoleTable({ roles, setRoles }) {
                     <textarea
                       value={editingData.currentWork}
                       onChange={(e) => handleFieldChange('currentWork', e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
+                      className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-green"
                       rows="2"
                     />
                   ) : (
@@ -153,13 +153,13 @@ export default function RoleTable({ roles, setRoles }) {
                       <>
                         <button
                           onClick={handleSave}
-                          className="text-bcg-green hover:text-green-700 transition-colors"
+                          className="text-bcg-green hover:text-bcg-dark-green transition-colors"
                         >
                           <Check size={18} />
                         </button>
                         <button
                           onClick={handleCancel}
-                          className="text-bcg-red hover:text-red-700 transition-colors"
+                          className="text-red-600 hover:text-red-700 transition-colors"
                         >
                           <X size={18} />
                         </button>
@@ -168,13 +168,13 @@ export default function RoleTable({ roles, setRoles }) {
                       <>
                         <button
                           onClick={() => handleEdit(role)}
-                          className="text-bcg-blue hover:text-bcg-navy transition-colors"
+                          className="text-bcg-teal hover:text-bcg-dark-green transition-colors"
                         >
                           <Edit2 size={18} />
                         </button>
                         <button
                           onClick={() => handleDelete(role.id)}
-                          className="text-bcg-red hover:text-red-700 transition-colors"
+                          className="text-red-600 hover:text-red-700 transition-colors"
                         >
                           <Trash2 size={18} />
                         </button>
