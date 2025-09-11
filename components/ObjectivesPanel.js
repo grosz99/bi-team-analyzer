@@ -18,7 +18,7 @@ export default function ObjectivesPanel({ objectives, setObjectives }) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg">
-      <div className="bg-bcg-navy text-white px-6 py-4 flex items-center gap-2">
+      <div className="bg-bcg-dark-green text-white px-6 py-4 flex items-center gap-2">
         <Target size={20} />
         <h2 className="text-xl font-bold">Strategic Objectives</h2>
       </div>
@@ -36,11 +36,11 @@ export default function ObjectivesPanel({ objectives, setObjectives }) {
                 value={objective}
                 onChange={(e) => handleObjectiveChange(index, e.target.value)}
                 placeholder="e.g., Build scalable web application, Implement AI agents, Improve QA processes..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-blue"
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bcg-green"
               />
               <button
                 onClick={() => handleRemoveObjective(index)}
-                className="text-bcg-red hover:text-red-700 transition-colors"
+                className="text-red-600 hover:text-red-700 transition-colors"
               >
                 <X size={20} />
               </button>
@@ -50,7 +50,7 @@ export default function ObjectivesPanel({ objectives, setObjectives }) {
         
         <button
           onClick={handleAddObjective}
-          className="mt-4 flex items-center gap-2 text-bcg-blue hover:text-bcg-navy transition-colors"
+          className="mt-4 flex items-center gap-2 text-bcg-green hover:text-bcg-dark-green transition-colors"
         >
           <Plus size={18} />
           Add Objective
