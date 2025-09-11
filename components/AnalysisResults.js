@@ -86,35 +86,83 @@ export default function AnalysisResults({ analysis, onAddRole }) {
           
           {expandedSections.roles && (
             <div className="p-6">
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {analysis.recommendedRoles.map((role, index) => (
-                  <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h4 className="text-lg font-semibold text-bcg-dark-green">{role.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{role.description}</p>
+                  <div key={index} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="bg-gradient-to-r from-bcg-light-gray to-white p-5">
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h4 className="text-xl font-bold text-bcg-dark-green mb-2">{role.title}</h4>
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-xs font-semibold text-gray-700 mb-1">Role Overview:</p>
+                              <p className="text-sm text-gray-600">{role.description}</p>
+                            </div>
+                            
+                            {role.technologies && role.technologies.length > 0 && (
+                              <div>
+                                <p className="text-xs font-semibold text-gray-700 mb-2">Required Technologies & Skills:</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {role.technologies.map((tech, i) => (
+                                    <span key={i} className="px-3 py-1 bg-white border border-bcg-green text-bcg-dark-green text-xs rounded-full font-medium">
+                                      {tech}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            
+                            <div>
+                              <p className="text-xs font-semibold text-gray-700 mb-1">Key Responsibilities:</p>
+                              <ul className="space-y-1">
+                                {role.description.split(',').map((resp, i) => (
+                                  <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
+                                    <span className="text-bcg-green mt-0.5">•</span>
+                                    <span>{resp.trim()}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            
+                            {role.reasoning && (
+                              <div className="mt-3 p-3 bg-blue-50 rounded-md">
+                                <p className="text-xs font-semibold text-gray-700 mb-1">Why This Role:</p>
+                                <p className="text-sm text-gray-600">{role.reasoning}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <button
+                          onClick={() => onAddRole(role)}
+                          className="ml-4 bg-bcg-green text-white px-6 py-3 rounded-md hover:bg-bcg-dark-green transition-colors text-sm font-semibold whitespace-nowrap"
+                        >
+                          Add to Team
+                        </button>
                       </div>
-                      <button
-                        onClick={() => onAddRole(role)}
-                        className="bg-bcg-green text-white px-4 py-2 rounded-md hover:bg-bcg-dark-green transition-colors text-sm"
-                      >
-                        Add to Team
-                      </button>
                     </div>
                     
-                    <div className="bg-bcg-gray rounded-md p-3">
-                      <p className="text-sm text-gray-700">
-                        <strong>Reasoning:</strong> {role.reasoning}
-                      </p>
-                    </div>
-                    
-                    <div className="flex gap-4 mt-3">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${getPriorityColor(role.priority)}`}></div>
-                        <span className="text-xs text-gray-600">Priority: {role.priority}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-600">Timeline: {role.timeframe}</span>
+                    <div className="bg-white px-5 py-3 border-t border-gray-100">
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-6">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-3 h-3 rounded-full ${getPriorityColor(role.priority)}`}></div>
+                            <span className="text-sm font-medium text-gray-700">Priority: {role.priority}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-600">Timeline: {role.timeframe}</span>
+                          </div>
+                          {role.quantity && role.quantity > 1 && (
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-gray-600">Quantity: {role.quantity}</span>
+                            </div>
+                          )}
+                        </div>
+                        {role.tiedToObjective && (
+                          <div className="text-xs text-gray-500">
+                            Addresses: {role.tiedToObjective}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
