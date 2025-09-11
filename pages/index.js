@@ -18,6 +18,7 @@ export default function Home() {
   const [analysis, setAnalysis] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
@@ -35,14 +36,24 @@ export default function Home() {
   };
 
   const handleAddRole = (newRole) => {
+    console.log('Adding new role:', newRole);
+    const maxId = roles.length > 0 ? Math.max(...roles.map(r => r.id)) : 0;
     const role = {
-      id: Math.max(...roles.map(r => r.id), 0) + 1,
-      title: newRole.title,
-      description: newRole.description,
-      currentWork: 'To be defined',
-      skillsNeeded: 'To be defined'
+      id: maxId + 1,
+      title: newRole.title || 'New Role',
+      description: newRole.description || 'Role description',
+      currentWork: newRole.reasoning || 'To be defined',
+      teamSize: 'right-sized'
     };
-    setRoles([...roles, role]);
+    console.log('New role object:', role);
+    setRoles(prevRoles => [...prevRoles, role]);
+    
+    // Show success message
+    setSuccessMessage(`Added "${newRole.title}" to the team!`);
+    setTimeout(() => setSuccessMessage(null), 3000);
+    
+    // Scroll to top to see the new role
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const exportData = {
@@ -79,6 +90,18 @@ export default function Home() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="space-y-8">
+            {successMessage && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center justify-between">
+                <span>{successMessage}</span>
+                <button 
+                  onClick={() => setSuccessMessage(null)}
+                  className="text-green-700 hover:text-green-900"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+            
             <RoleTable roles={roles} setRoles={setRoles} />
             
             <ObjectivesPanel 
