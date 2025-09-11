@@ -41,7 +41,15 @@ Return ONLY valid JSON with the following structure:
   "roleEnhancements": [
     {
       "existingRole": "Current Role Title from the team",
-      "skillsToAdd": ["Specific skill 1", "Specific skill 2"],
+      "aiEvolution": {
+        "currentResponsibilities": "What this role does today",
+        "aiAugmentedResponsibilities": "How AI transforms their daily work",
+        "aiToolsToAdopt": ["Specific AI tool 1", "Specific AI tool 2"],
+        "tasksAutomated": ["Task that AI will handle", "Another automated task"],
+        "newFocusAreas": ["Strategic work they can focus on", "Higher-value activities"],
+        "skillsNeeded": ["AI prompt engineering", "AI tool mastery", "Strategic thinking"]
+      },
+      "additionalSkills": ["Non-AI skill 1", "Non-AI skill 2"],
       "trainingNeeded": "Concrete training path (courses, certifications, practice projects)",
       "whyNeeded": "How these skills help achieve the stated objectives",
       "timeToTrain": "2-3 months",
@@ -62,14 +70,17 @@ CRITICAL ANALYSIS RULES:
 3. Compare needed capabilities against current team to find gaps
 4. For currentGaps: Be specific about what the team CANNOT do
    - Example: "To build scalable web app (Objective 1), need React/Node.js skills - currently no one has frontend development experience"
-5. For roleEnhancements: Analyze EVERY EXISTING ROLE
-   - What skills does each role need to help achieve the objectives?
-   - Be specific about training paths and timelines
+5. For roleEnhancements: Analyze EVERY EXISTING ROLE with AI EVOLUTION focus:
+   - How will AI transform each role's responsibilities?
+   - What tasks can be automated with AI tools (GitHub Copilot, ChatGPT, Claude, etc.)?
+   - What new strategic work can they focus on when AI handles routine tasks?
+   - Be specific about AI tools and how they reshape the role
+   - Example: "Product Analyst can use AI for automated reporting, freeing time for strategic analysis"
 6. Create a COMPLETE ROADMAP considering team sizing:
    - Overstaffed roles = retraining opportunities
    - Understaffed roles = need more people
    - Missing capabilities = new hires OR upskilling
-7. Your analysis should show the PATH from current state to achieving all objectives`;
+7. Your analysis should show the PATH from current state to achieving all objectives with AI augmentation`;
 
   const userPrompt = `
 Current Team Composition:

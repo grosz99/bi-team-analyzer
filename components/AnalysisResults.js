@@ -140,18 +140,106 @@ export default function AnalysisResults({ analysis, onAddRole }) {
           
           {expandedSections.enhancements && (
             <div className="p-6">
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {analysis.roleEnhancements.map((enhancement, index) => (
-                  <div key={index} className="border-l-4 border-bcg-teal pl-4">
-                    <h4 className="font-semibold text-bcg-dark-gray">{enhancement.existingRole}</h4>
-                    <div className="mt-2 space-y-2">
-                      <div>
-                        <span className="text-sm font-medium text-gray-700">Additional Skills Needed:</span>
-                        <p className="text-sm text-gray-600">{enhancement.additionalSkills}</p>
+                  <div key={index} className="border rounded-lg border-gray-200 overflow-hidden">
+                    <div className="bg-gradient-to-r from-bcg-light-green to-bcg-gray p-4">
+                      <h4 className="font-bold text-lg text-bcg-dark-green">{enhancement.existingRole}</h4>
+                    </div>
+                    
+                    {enhancement.aiEvolution && (
+                      <div className="p-4 bg-blue-50 border-b border-gray-200">
+                        <h5 className="font-semibold text-bcg-dark-green mb-3 flex items-center gap-2">
+                          <span>🤖</span> AI Evolution of this Role
+                        </h5>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-xs font-semibold text-gray-700 mb-1">Current Responsibilities:</p>
+                            <p className="text-sm text-gray-600">{enhancement.aiEvolution.currentResponsibilities}</p>
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs font-semibold text-gray-700 mb-1">AI-Augmented Future:</p>
+                            <p className="text-sm text-gray-600">{enhancement.aiEvolution.aiAugmentedResponsibilities}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                          <div>
+                            <p className="text-xs font-semibold text-gray-700 mb-2">AI Tools to Adopt:</p>
+                            <ul className="space-y-1">
+                              {enhancement.aiEvolution.aiToolsToAdopt?.map((tool, i) => (
+                                <li key={i} className="text-sm text-gray-600 flex items-start gap-1">
+                                  <span className="text-bcg-green mt-0.5">•</span>
+                                  <span>{tool}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs font-semibold text-gray-700 mb-2">Tasks to be Automated:</p>
+                            <ul className="space-y-1">
+                              {enhancement.aiEvolution.tasksAutomated?.map((task, i) => (
+                                <li key={i} className="text-sm text-gray-600 flex items-start gap-1">
+                                  <span className="text-orange-500 mt-0.5">•</span>
+                                  <span>{task}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div>
+                            <p className="text-xs font-semibold text-gray-700 mb-2">New Strategic Focus:</p>
+                            <ul className="space-y-1">
+                              {enhancement.aiEvolution.newFocusAreas?.map((area, i) => (
+                                <li key={i} className="text-sm text-gray-600 flex items-start gap-1">
+                                  <span className="text-bcg-teal mt-0.5">•</span>
+                                  <span>{area}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                        
+                        {enhancement.aiEvolution.skillsNeeded && enhancement.aiEvolution.skillsNeeded.length > 0 && (
+                          <div className="mt-4 p-3 bg-white rounded-md">
+                            <p className="text-xs font-semibold text-gray-700 mb-2">AI Skills to Develop:</p>
+                            <div className="flex flex-wrap gap-2">
+                              {enhancement.aiEvolution.skillsNeeded.map((skill, i) => (
+                                <span key={i} className="px-2 py-1 bg-bcg-light-green text-bcg-dark-green text-xs rounded-full">
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
+                    )}
+                    
+                    <div className="p-4 space-y-3">
+                      {enhancement.additionalSkills && (
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">Additional Skills Needed:</p>
+                          <p className="text-sm text-gray-600">
+                            {Array.isArray(enhancement.additionalSkills) 
+                              ? enhancement.additionalSkills.join(', ') 
+                              : enhancement.additionalSkills}
+                          </p>
+                        </div>
+                      )}
+                      
                       <div>
-                        <span className="text-sm font-medium text-gray-700">Training Recommendations:</span>
+                        <p className="text-sm font-medium text-gray-700">Training Path:</p>
                         <p className="text-sm text-gray-600">{enhancement.trainingNeeded}</p>
+                      </div>
+                      
+                      <div className="flex justify-between items-center pt-2 border-t border-gray-100">
+                        <div className="flex gap-4 text-xs">
+                          <span className="text-gray-500">Time to Train: {enhancement.timeToTrain}</span>
+                          <span className="text-gray-500">Feasibility: {enhancement.feasibility}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
