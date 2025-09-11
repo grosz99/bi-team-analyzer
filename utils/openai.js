@@ -70,12 +70,15 @@ CRITICAL ANALYSIS RULES:
 3. Compare needed capabilities against current team to find gaps
 4. For currentGaps: Be specific about what the team CANNOT do
    - Example: "To build scalable web app (Objective 1), need React/Node.js skills - currently no one has frontend development experience"
-5. For roleEnhancements: Analyze EVERY EXISTING ROLE with AI EVOLUTION focus:
+5. For roleEnhancements: YOU MUST ANALYZE EVERY SINGLE EXISTING ROLE with AI EVOLUTION focus:
+   - MANDATORY: Create one roleEnhancement entry for EACH role in the current team
    - How will AI transform each role's responsibilities?
-   - What tasks can be automated with AI tools (GitHub Copilot, ChatGPT, Claude, etc.)?
+   - What tasks can be automated with AI tools (GitHub Copilot, ChatGPT, Claude, Cursor, Perplexity, etc.)?
    - What new strategic work can they focus on when AI handles routine tasks?
-   - Be specific about AI tools and how they reshape the role
-   - Example: "Product Analyst can use AI for automated reporting, freeing time for strategic analysis"
+   - Be VERY specific about AI tools and their impact
+   - Example for Product Owner: "Uses AI for automated user story generation, requirements analysis, and stakeholder communication"
+   - Example for Product Manager: "Leverages AI for competitive analysis, roadmap optimization, and market research"
+   - Example for Product Analyst: "Uses AI for automated reporting, predictive analytics, and A/B test analysis"
 6. Create a COMPLETE ROADMAP considering team sizing:
    - Overstaffed roles = retraining opportunities
    - Understaffed roles = need more people
@@ -98,7 +101,10 @@ PROVIDE A HOLISTIC ANALYSIS:
 1. For each objective, explain what's needed to achieve it
 2. Map current team capabilities to objectives
 3. Identify gaps and provide specific solutions
-4. Create a complete roadmap showing how to achieve ALL objectives with minimal cost (prioritize retraining overstaffed roles over new hires where possible)
+4. MANDATORY: Provide AI evolution analysis for EVERY SINGLE role listed above - no exceptions!
+5. Create a complete roadmap showing how to achieve ALL objectives with minimal cost (prioritize retraining overstaffed roles over new hires where possible)
+
+IMPORTANT: The roleEnhancements array MUST contain one entry for EACH role in the current team. If there are 5 roles, provide 5 roleEnhancements. Every role needs AI evolution analysis.
 
 Your analysis should answer: "How do we achieve our objectives with the team we have, and what specific changes are needed?"`;
 
@@ -115,7 +121,7 @@ Your analysis should answer: "How do we achieve our objectives with the team we 
       }
     ],
     temperature: 0.3,
-    max_tokens: 3000,
+    max_tokens: 8000,
     response_format: { type: 'json_object' }
   });
 
